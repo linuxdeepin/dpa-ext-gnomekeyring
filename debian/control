@@ -1,0 +1,15 @@
+Source: dpa-ext-gnomekeyring
+Section: devel
+Priority: optional
+Maintainer: Deepin Packages Builder <packages@deepin.com>
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.8
+Homepage: https://www.deepin.org
+#Vcs-Git: https://anonscm.debian.org/collab-maint/dpa-ext-gnomekeyring.git
+#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/dpa-ext-gnomekeyring.git
+
+Package: dpa-ext-gnomekeyring
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
