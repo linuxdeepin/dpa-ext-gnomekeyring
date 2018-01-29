@@ -2,4 +2,4 @@ dpa-ext-gnomekeyring (1.0-1) unstable; urgency=medium
 
   * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
 
- -- unknown <zs@zs-PC>  Mon, 29 Jan 2018 16:37:58 +0800
+ -- Deepin <packages@deepin.com>  Mon, 29 Jan 2018 16:37:58 +0800

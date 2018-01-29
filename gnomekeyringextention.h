@@ -3,8 +3,8 @@
 
 #include <QObject>
 
-#include "../dde-polkit-agent/agent-extension-proxy.h"
-#include "../dde-polkit-agent/agent-extension.h"
+#include <dpa/agent-extension-proxy.h>
+#include <dpa/agent-extension.h>
 
 class  GnomeKeyringExtention : public QObject, dpa::AgentExtension
 {
