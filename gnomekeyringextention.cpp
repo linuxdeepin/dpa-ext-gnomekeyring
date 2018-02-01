@@ -5,6 +5,8 @@
 
 #include <gnome-keyring-1/gnome-keyring.h>
 
+static const char* LoginKeyring = "login";
+
 static const QString ActionEnableAutoLogin = "com.deepin.daemon.accounts.enable-auto-login";
 static const QString ActionDisableAutoLogin = "com.deepin.daemon.accounts.disable-auto-login";
 static const QString ActionEnableNopassLogin = "com.deepin.daemon.accounts.enable-nopass-login";
@@ -99,7 +101,22 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
     char *defaultKeyring = new char[1024];
 
     GnomeKeyringResult result = gnome_keyring_get_default_keyring_sync(&defaultKeyring);
-    if (result == GNOME_KEYRING_RESULT_OK || strcmp(defaultKeyring, "login")) {
+    if (result != GNOME_KEYRING_RESULT_OK || strcmp(defaultKeyring, LoginKeyring) != 0) {
+        qDebug() << "default keyring is not login keyring, create one.";
+
+        result = gnome_keyring_create_sync(LoginKeyring, newPass.toStdString().c_str());
+        if (result == GNOME_KEYRING_RESULT_OK)
+            qDebug() << "successfully created login keyring";
+        else
+            qDebug() << "failed to create login keyring";
+
+
+        result = gnome_keyring_set_default_keyring_sync(LoginKeyring);
+        if (result == GNOME_KEYRING_RESULT_OK)
+            qDebug() << "successfully set default keyring to login.";
+        else
+            qDebug() << "failed to set default keyring to login";
+    } else {
         result = gnome_keyring_change_password_sync(defaultKeyring,
                                                     current.toStdString().c_str(),
                                                     newPass.toStdString().c_str());
@@ -109,8 +126,6 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
         else
             qWarning() << "failed to change keyring password: " << result;
 
-    } else {
-        qWarning() << "failed to query default keyring, or maybe the default keyring is not login.";
     }
 
     delete(defaultKeyring);
