@@ -98,7 +98,7 @@ void GnomeKeyringExtention::restoreKeyringPassword(const QString &password)
 void GnomeKeyringExtention::setKeyringPassword(const QString current, const QString newPass)
 {
 
-    char *defaultKeyring = new char[1024];
+    char *defaultKeyring = NULL;
 
     GnomeKeyringResult result = gnome_keyring_get_default_keyring_sync(&defaultKeyring);
     if (result != GNOME_KEYRING_RESULT_OK || strcmp(defaultKeyring, LoginKeyring) != 0) {
@@ -128,5 +128,5 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
 
     }
 
-    delete(defaultKeyring);
+    free(defaultKeyring);
 }
