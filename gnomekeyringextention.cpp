@@ -35,8 +35,6 @@ void GnomeKeyringExtention::initialize(dpa::AgentExtensionProxy *proxy)
         qWarning() << "failed to load qm file: " << filename;
     }
 
-    qDebug() << m_translator.data()->translate("GnomeKeyringExtention", "Empty keyring password");
-
     m_proxy = proxy;
 }
 
