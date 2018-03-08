@@ -28,9 +28,7 @@ SOURCES += \
         gnomekeyringextention.cpp
 
 HEADERS += \
-        gnomekeyringextention.h \
-    ../dde-polkit-agent/agent-extension-proxy.h \
-    ../dde-polkit-agent/agent-extension.h
+        gnomekeyringextention.h
 
 unix {
     target.path = /usr/lib/polkit-1-dde/plugins/
