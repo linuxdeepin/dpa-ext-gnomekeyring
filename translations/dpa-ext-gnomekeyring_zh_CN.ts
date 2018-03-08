@@ -6,14 +6,12 @@
     <message>
         <location filename="../gnomekeyringextention.cpp" line="57"/>
         <source>Empty keyring password</source>
-        <translatorcomment>清空钥匙环密码</translatorcomment>
-        <translation></translation>
+        <translation>清空钥匙环密码</translation>
     </message>
     <message>
         <location filename="../gnomekeyringextention.cpp" line="59"/>
         <source>Restore keyring password</source>
-        <translatorcomment>恢复钥匙环密码</translatorcomment>
-        <translation></translation>
+        <translation>恢复钥匙环密码</translation>
     </message>
 </context>
 </TS>

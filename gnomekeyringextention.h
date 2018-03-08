@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QButtonGroup>
 #include <QCheckBox>
+#include <QTranslator>
 
 #include <dpa/agent-extension-proxy.h>
 #include <dpa/agent-extension.h>
@@ -30,6 +31,7 @@ private:
     dpa::AgentExtensionProxy *m_proxy;
 
     QPointer<QCheckBox> m_checkBtn;
+    QPointer<QTranslator> m_translator;
 
     void emptyKeyringPassword(const QString &password);
     void restoreKeyringPassword(const QString &password);

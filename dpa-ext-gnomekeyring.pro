@@ -40,7 +40,7 @@ unix {
     target.path = /usr/lib/polkit-1-dde/plugins/
     INSTALLS += target
 
-    qm_files.path = /usr/share/dpa-ext-gnomekeyring/
+    qm_files.path = /usr/share/dpa-ext-gnomekeyring/translations/
     qm_files.files = $$PWD/translations/*.qm
     INSTALLS += qm_files
 }

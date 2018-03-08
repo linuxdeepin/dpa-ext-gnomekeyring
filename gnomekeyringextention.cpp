@@ -21,12 +21,29 @@ GnomeKeyringExtention::GnomeKeyringExtention(QObject *parent)
 
 void GnomeKeyringExtention::initialize(dpa::AgentExtensionProxy *proxy)
 {
+    const QString locale = QLocale::system().name();
+    const QString filename = QString("/usr/share/dpa-ext-gnomekeyring/translations/dpa-ext-gnomekeyring_%1.qm").arg(locale);
+
+    m_translator = new QTranslator;
+    if (m_translator->load(filename)) {
+        if (!qApp->installTranslator(m_translator)) {
+            qWarning() << "failed to install translator of plugin gnome-keyring";
+        } else {
+            qDebug() << "installed translator of plugin gnome-keyring";
+        }
+    } else {
+        qWarning() << "failed to load qm file: " << filename;
+    }
+
+    qDebug() << m_translator.data()->translate("GnomeKeyringExtention", "Empty keyring password");
+
     m_proxy = proxy;
 }
 
 void GnomeKeyringExtention::finalize()
 {
-
+    qApp->removeTranslator(m_translator);
+    m_translator.data()->deleteLater();
 }
 
 QStringList GnomeKeyringExtention::interestedActions() const
