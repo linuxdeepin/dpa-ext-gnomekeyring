@@ -78,6 +78,7 @@ QButtonGroup *GnomeKeyringExtention::options()
 
     QButtonGroup *group = new QButtonGroup;
     group->addButton(m_checkBtn);
+    group->setExclusive(false);
 
     return group;
 }
