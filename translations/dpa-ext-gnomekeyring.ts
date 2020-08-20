@@ -1,17 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="en" version="2.1">
 <context>
     <name>GnomeKeyringExtention</name>
     <message>
-        <location filename="../gnomekeyringextention.cpp" line="57"/>
+        <location filename="../gnomekeyringextention.cpp" line="76"/>
         <source>Empty keyring password</source>
-        <translation type="unfinished"></translation>
+        <translation>Empty keyring password</translation>
     </message>
     <message>
-        <location filename="../gnomekeyringextention.cpp" line="59"/>
+        <location filename="../gnomekeyringextention.cpp" line="76"/>
+        <source>To simplify system verification, it is recommended to empty the keyring password</source>
+        <translation>To simplify system verification, it is recommended to empty the keyring password</translation>
+    </message>
+    <message>
+        <location filename="../gnomekeyringextention.cpp" line="78"/>
         <source>Restore keyring password</source>
-        <translation type="unfinished"></translation>
+        <translation>Restore keyring password</translation>
     </message>
 </context>
 </TS>
