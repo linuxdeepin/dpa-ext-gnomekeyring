@@ -72,8 +72,8 @@ QButtonGroup *GnomeKeyringExtention::options()
 
     if (actionID == ActionEnableAutoLogin ||
         actionID == ActionEnableNopassLogin ||
-	actionID == ActionEnrollFingerprint) {
-        m_checkBtn.data()->setText(tr("Empty keyring password"));
+        actionID == ActionEnrollFingerprint) {
+        m_checkBtn.data()->setText(QString("%1 (%2)").arg(tr("Empty keyring password")).arg(tr("To simplify system verification, it is recommended to empty the keyring password")));
     } else if (actionID == ActionDisableAutoLogin || actionID == ActionDisableNopassLogin) {
         m_checkBtn.data()->setText(tr("Restore keyring password"));
     }
