@@ -1,11 +1,13 @@
+// 与 Qt 中的宏冲突，必须在 Qt 前 include
+#include <libsecret/secret.h>
+
 #include "gnomekeyringextention.h"
 
 #include <QDebug>
 #include <QCheckBox>
 
-#include <gnome-keyring-1/gnome-keyring.h>
-
-static const char* LoginKeyring = "login";
+static const char *PasswordSecretValueContentType = "text/plain";
+static const char *LoginKeyringPath = "/org/freedesktop/secrets/collection/login";
 
 static const QString ActionEnableAutoLogin = "com.deepin.daemon.accounts.enable-auto-login";
 static const QString ActionDisableAutoLogin = "com.deepin.daemon.accounts.disable-auto-login";
@@ -111,44 +113,55 @@ void GnomeKeyringExtention::emptyKeyringPassword(const QString &password)
     setKeyringPassword(password, "");
 }
 
-void GnomeKeyringExtention::restoreKeyringPassword(const QString &password)
-{
-    qDebug() << "restore keyring password";
-    setKeyringPassword("", password);
-}
-
 void GnomeKeyringExtention::setKeyringPassword(const QString current, const QString newPass)
 {
+    GError *err = nullptr;
+    SecretService *service = nullptr;
+    GDBusConnection *bus = nullptr;
+    SecretValue *currentValue = nullptr;
+    SecretValue *newPassValue = nullptr;
 
-    char *defaultKeyring = NULL;
+    do {
+        service = secret_service_get_sync(SECRET_SERVICE_OPEN_SESSION, nullptr, &err);
+        if (service == nullptr) {
+            qWarning() << "failed to get secret service:" << err->message;
+            break;
+        }
 
-    GnomeKeyringResult result = gnome_keyring_get_default_keyring_sync(&defaultKeyring);
-    if (result != GNOME_KEYRING_RESULT_OK || strcmp(defaultKeyring, LoginKeyring) != 0) {
-        qDebug() << "default keyring is not login keyring, create one.";
+        auto currentLatin1 = current.toLatin1();
+        currentValue = secret_value_new(currentLatin1.data(), currentLatin1.length(), PasswordSecretValueContentType);
 
-        result = gnome_keyring_create_sync(LoginKeyring, newPass.toStdString().c_str());
-        if (result == GNOME_KEYRING_RESULT_OK)
-            qDebug() << "successfully created login keyring";
-        else
-            qDebug() << "failed to create login keyring";
+        auto newPassLatin1 = newPass.toLatin1();
+        newPassValue = secret_value_new(newPassLatin1.data(), newPassLatin1.length(), PasswordSecretValueContentType);
 
+        bus = g_bus_get_sync(G_BUS_TYPE_SESSION, nullptr, &err);
+        if (bus == nullptr) {
+             qWarning() << "failed to get session bus:" << err->message;
+             break;
+        }
+        g_dbus_connection_call_sync(bus,
+                                    "org.gnome.keyring",
+                                    "/org/freedesktop/secrets",
+                                    "org.gnome.keyring.InternalUnsupportedGuiltRiddenInterface",
+                                    "ChangeWithMasterPassword",
+                                    g_variant_new("(o@(oayays)@(oayays))",
+                                                  LoginKeyringPath,
+                                                  secret_service_encode_dbus_secret(service, currentValue),
+                                                  secret_service_encode_dbus_secret(service, newPassValue)),
+                                    nullptr,
+                                    G_DBUS_CALL_FLAGS_NONE,
+                                    G_MAXINT,
+                                    nullptr,
+                                    &err);
+         if (err != nullptr) {
+             qWarning() << "failed to change keyring password:" << err->message;
+             break;
+         }
+    } while (false);
 
-        result = gnome_keyring_set_default_keyring_sync(LoginKeyring);
-        if (result == GNOME_KEYRING_RESULT_OK)
-            qDebug() << "successfully set default keyring to login.";
-        else
-            qDebug() << "failed to set default keyring to login";
-    } else {
-        result = gnome_keyring_change_password_sync(defaultKeyring,
-                                                    current.toStdString().c_str(),
-                                                    newPass.toStdString().c_str());
-
-        if (result == GNOME_KEYRING_RESULT_OK)
-            qDebug() << "successfully change keyring password.";
-        else
-            qWarning() << "failed to change keyring password: " << result;
-
-    }
-
-    free(defaultKeyring);
+    if (err != nullptr) g_error_free(err);
+    if (service != nullptr) g_object_unref(service);
+    if (bus != nullptr) g_object_unref(bus);
+    if (currentValue != nullptr) g_object_unref(bus);
+    if (newPassValue != nullptr) g_object_unref(bus);
 }
