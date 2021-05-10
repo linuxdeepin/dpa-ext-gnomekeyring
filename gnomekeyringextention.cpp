@@ -135,6 +135,20 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
             break;
         }
 
+        SecretCollection *collection = secret_collection_for_alias_sync(service,
+                                                                        SECRET_COLLECTION_DEFAULT,
+                                                                        SECRET_COLLECTION_NONE,
+                                                                        NULL,
+                                                                        &err);
+        if (err != nullptr) {
+            qWarning() << "failed to get default secret collection:" << err->message;
+            break;
+        }
+        if (collection == nullptr) {
+            qDebug() << "default secret collection not exists";
+            break;
+        }
+
         auto currentLatin1 = current.toLatin1();
         currentValue = secret_value_new(currentLatin1.data(), currentLatin1.length(), PasswordSecretValueContentType);
 
