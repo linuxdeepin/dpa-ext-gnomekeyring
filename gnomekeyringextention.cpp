@@ -127,6 +127,7 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
     GDBusConnection *bus = nullptr;
     SecretValue *currentValue = nullptr;
     SecretValue *newPassValue = nullptr;
+    GVariant *ret = nullptr;
 
     do {
         service = secret_service_get_sync(SECRET_SERVICE_OPEN_SESSION, nullptr, &err);
@@ -161,20 +162,20 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
              break;
         }
 
-        g_dbus_connection_call_sync(bus,
-                                    "org.gnome.keyring",
-                                    "/org/freedesktop/secrets",
-                                    "org.gnome.keyring.InternalUnsupportedGuiltRiddenInterface",
-                                    "ChangeWithMasterPassword",
-                                    g_variant_new("(o@(oayays)@(oayays))",
-                                                  LoginKeyringPath,
-                                                  secret_service_encode_dbus_secret(service, currentValue),
-                                                  secret_service_encode_dbus_secret(service, newPassValue)),
-                                    nullptr,
-                                    G_DBUS_CALL_FLAGS_NONE,
-                                    G_MAXINT,
-                                    nullptr,
-                                    &err);
+        ret = g_dbus_connection_call_sync(bus,
+                                          "org.gnome.keyring",
+                                          "/org/freedesktop/secrets",
+                                          "org.gnome.keyring.InternalUnsupportedGuiltRiddenInterface",
+                                          "ChangeWithMasterPassword",
+                                          g_variant_new("(o@(oayays)@(oayays))",
+                                                        LoginKeyringPath,
+                                                        secret_service_encode_dbus_secret(service, currentValue),
+                                                        secret_service_encode_dbus_secret(service, newPassValue)),
+                                          nullptr,
+                                          G_DBUS_CALL_FLAGS_NONE,
+                                          G_MAXINT,
+                                          nullptr,
+                                          &err);
          if (err != nullptr) {
              qWarning() << "failed to change keyring password:" << err->message;
              break;
@@ -186,4 +187,5 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
     if (bus != nullptr) g_object_unref(bus);
     if (currentValue != nullptr) g_object_unref(bus);
     if (newPassValue != nullptr) g_object_unref(bus);
+    if (ret != nullptr) g_variant_unref(ret);
 }
