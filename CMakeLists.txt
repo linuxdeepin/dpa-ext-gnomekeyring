@@ -24,10 +24,7 @@ add_compile_definitions(DPAEXTGNOMEKEYRING_LIBRARY)
 # deprecated API in order to know how to port your code away from it.
 add_compile_definitions(QT_DEPRECATED_WARNINGS)
 
-set(TS_FILES
-    translations/dpa-ext-gnomekeyring.ts
-    translations/dpa-ext-gnomekeyring_zh_CN.ts
-)
+file(GLOB TS_FILES translations/dpa-ext-gnomekeyring*.ts)
 
 qt5_add_translation(QM_FILES ${TS_FILES})
 
