@@ -27,6 +27,8 @@ public:
 
     void extendedDo() Q_DECL_OVERRIDE;
 
+    void setKeyringPassword(const QString current, const QString newPass) Q_DECL_OVERRIDE;
+
 private:
     dpa::AgentExtensionProxy *m_proxy;
 
@@ -35,8 +37,6 @@ private:
 
     void emptyKeyringPassword(const QString &password);
     void restoreKeyringPassword(const QString &password);
-
-    void setKeyringPassword(const QString current, const QString newPass);
 };
 
 #endif // GNOMEKEYRINGEXTENTION_H
