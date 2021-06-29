@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da2551f0_cf9b4c93",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-06-29T12:46:14Z",
+      "side": 1,
+      "message": "缺少Log信息",
+      "revId": "70b4c77aa3fffad786d9dcbe148b689cd0b470dd",
+      "serverId": "7c03bcd7-3a90-48d7-8881-a48a22a829d2",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a7113ec_51697310",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000002
+      },
+      "writtenOn": "2021-06-29T12:46:14Z",
+      "side": 1,
+      "message": "test后必须存在一个\u0027:\u0027",
+      "revId": "70b4c77aa3fffad786d9dcbe148b689cd0b470dd",
+      "serverId": "7c03bcd7-3a90-48d7-8881-a48a22a829d2",
+      "unresolved": true
+    }
+  ]
+}
