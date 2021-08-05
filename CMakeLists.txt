@@ -37,6 +37,7 @@ target_sources(dpa-ext-gnomekeyring PRIVATE
 )
 
 target_include_directories(dpa-ext-gnomekeyring PRIVATE
+    /usr/include
     ${Qt5_INCLUDE_DIRS}
 )
 
