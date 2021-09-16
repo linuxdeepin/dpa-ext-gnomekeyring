@@ -185,7 +185,7 @@ void GnomeKeyringExtention::setKeyringPassword(const QString current, const QStr
     if (err != nullptr) g_error_free(err);
     if (service != nullptr) g_object_unref(service);
     if (bus != nullptr) g_object_unref(bus);
-    if (currentValue != nullptr) g_object_unref(bus);
-    if (newPassValue != nullptr) g_object_unref(bus);
+    if (currentValue != nullptr) g_object_unref(currentValue);
+    if (newPassValue != nullptr) g_object_unref(newPassValue);
     if (ret != nullptr) g_variant_unref(ret);
 }
