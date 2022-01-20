@@ -10,6 +10,7 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(Qt5DBus REQUIRED)
 
 pkg_check_modules(libsecret REQUIRED IMPORTED_TARGET libsecret-unstable)
 add_compile_definitions(SECRET_API_SUBJECT_TO_CHANGE)
@@ -45,6 +46,7 @@ target_link_libraries(dpa-ext-gnomekeyring PRIVATE
     Qt5::Widgets
     PkgConfig::libsecret
     PkgConfig::glib
+    ${Qt5DBus_LIBRARIES}
 )
 
 install(TARGETS

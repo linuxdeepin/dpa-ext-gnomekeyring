@@ -6,6 +6,7 @@
 
 #include <QDebug>
 #include <QCheckBox>
+#include <QDBusInterface>
 
 static const char *PasswordSecretValueContentType = "text/plain";
 static const char *LoginKeyringPath = "/org/freedesktop/secrets/collection/login";
@@ -84,7 +85,17 @@ QButtonGroup *GnomeKeyringExtention::options()
         m_checkBtn.data()->setText(tr("Restore keyring password"));
     }
 
-    m_checkBtn.data()->setChecked(true);
+    // 修复bug11577中问题：同时打开自动登录和免密登录，再关闭其中一个，此时鉴权窗口中勾选了恢复密钥环
+    // 修复方案：自动登录和免密登录时，密钥环操作不作勾选
+    QDBusInterface *inter = new QDBusInterface("com.deepin.daemon.Accounts",
+                                               "/com/deepin/daemon/Accounts/User" + QString::number(getuid()),
+                                               "com.deepin.daemon.Accounts.User",
+                                               QDBusConnection::sessionBus());
+    bool npLogin = inter->property("NoPasswdLogin").toBool();
+    bool amLogin = inter->property("AutomaticLogin").toBool();
+    inter->deleteLater();
+
+    m_checkBtn.data()->setChecked(!(npLogin && amLogin));
 
     QButtonGroup *group = new QButtonGroup;
     group->addButton(m_checkBtn);
