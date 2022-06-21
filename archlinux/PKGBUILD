@@ -11,24 +11,20 @@ makedepends=('git' 'cmake' 'ninja' 'qt5-tools' 'libgnome-keyring' 'deepin-polkit
 conflicts=('deepin-polkit-agent-ext-gnomekeyring')
 provides=('deepin-polkit-agent-ext-gnomekeyring')
 groups=('deepin-git')
-source=("$pkgname-$pkgver::source.tar.gz")
+source=('source.tar.gz')
 sha512sums=('SKIP')
-pkgver() {
-    cd $pkgname-$pkgver
-    git describe --long --tags | sed 's/\([^-]*-g\)/r\1/;s/-/./g'
-}
 
 prepare() {
-    cd $pkgname-$pkgver
+    cd $deepin_source_name
 }
 
 build() {
-  cd $pkgname-$pkgver
+  cd $deepin_source_name
   cmake . -G Ninja -DCMAKE_INSTALL_PREFIX=/usr
   ninja
 }
 
 package() {
-  cd $pkgname-$pkgver
+  cd $deepin_source_name
   DESTDIR="$pkgdir" ninja install
 }
