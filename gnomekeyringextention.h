@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 #ifndef GNOMEKEYRINGEXTENTION_H
 #define GNOMEKEYRINGEXTENTION_H
 

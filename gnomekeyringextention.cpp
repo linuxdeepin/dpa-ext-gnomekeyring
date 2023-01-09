@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+//
+// SPDX-License-Identifier: GPL-3.0-or-later
 // 与 Qt 中的宏冲突，必须在 Qt 前 include
 #include <libsecret/secret.h>
 #include <gio/gio.h>
