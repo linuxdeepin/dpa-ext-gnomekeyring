@@ -20,6 +20,7 @@ static const QString ActionEnableNopassLogin = "com.deepin.daemon.accounts.enabl
 static const QString ActionDisableNopassLogin = "com.deepin.daemon.accounts.disable-nopass-login";
 static const QString ActionEnrollFingerprint = "com.deepin.daemon.authenticate.Fingerprint.enroll";
 static const QString ActionEnrollFace = "com.deepin.daemon.authenticate.Face.enroll";
+static const QString ActionEnrollIris = "com.deepin.daemon.authenticate.Iris.enroll";
 
 GnomeKeyringExtention::GnomeKeyringExtention(QObject *parent)
     : QObject(parent),
@@ -62,7 +63,8 @@ QStringList GnomeKeyringExtention::interestedActions() const
         << ActionEnableNopassLogin
         << ActionDisableNopassLogin
         << ActionEnrollFingerprint
-        << ActionEnrollFace;
+        << ActionEnrollFace
+        << ActionEnrollIris;
 
     return ret;
 }
@@ -82,7 +84,8 @@ QButtonGroup *GnomeKeyringExtention::options()
     if (actionID == ActionEnableAutoLogin ||
         actionID == ActionEnableNopassLogin ||
         actionID == ActionEnrollFingerprint ||
-        actionID == ActionEnrollFace) {
+        actionID == ActionEnrollFace ||
+        actionID == ActionEnrollIris) {
         m_checkBtn.data()->setText(tr("Empty keyring password"));
     } else if (actionID == ActionDisableAutoLogin || actionID == ActionDisableNopassLogin) {
         m_checkBtn.data()->setText(tr("Restore keyring password"));
@@ -115,7 +118,8 @@ void GnomeKeyringExtention::extendedDo()
     if (actionID == ActionEnableAutoLogin ||
         actionID == ActionEnableNopassLogin ||
         actionID == ActionEnrollFingerprint ||
-        actionID == ActionEnrollFace) {
+        actionID == ActionEnrollFace ||
+        actionID == ActionEnrollIris) {
         if (!m_checkBtn.isNull() && m_checkBtn.data()->checkState() == Qt::Checked) {
             emptyKeyringPassword(password);
         }
