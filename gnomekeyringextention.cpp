@@ -14,13 +14,13 @@
 static const char *PasswordSecretValueContentType = "text/plain";
 static const char *LoginKeyringPath = "/org/freedesktop/secrets/collection/login";
 
-static const QString ActionEnableAutoLogin = "com.deepin.daemon.accounts.enable-auto-login";
-static const QString ActionDisableAutoLogin = "com.deepin.daemon.accounts.disable-auto-login";
-static const QString ActionEnableNopassLogin = "com.deepin.daemon.accounts.enable-nopass-login";
-static const QString ActionDisableNopassLogin = "com.deepin.daemon.accounts.disable-nopass-login";
-static const QString ActionEnrollFingerprint = "com.deepin.daemon.authenticate.Fingerprint.enroll";
-static const QString ActionEnrollFace = "com.deepin.daemon.authenticate.Face.enroll";
-static const QString ActionEnrollIris = "com.deepin.daemon.authenticate.Iris.enroll";
+static const QString ActionEnableAutoLogin = "org.deepin.dde.accounts.enable-auto-login";
+static const QString ActionDisableAutoLogin = "org.deepin.dde.accounts.disable-auto-login";
+static const QString ActionEnableNopassLogin = "org.deepin.dde.accounts.enable-nopass-login";
+static const QString ActionDisableNopassLogin = "org.deepin.dde.accounts.disable-nopass-login";
+static const QString ActionEnrollFingerprint = "org.deepin.dde.authenticate.Fingerprint.enroll";
+static const QString ActionEnrollFace = "org.deepin.dde.authenticate.Face.enroll";
+static const QString ActionEnrollIris = "org.deepin.dde.authenticate.Iris.enroll";
 
 GnomeKeyringExtention::GnomeKeyringExtention(QObject *parent)
     : QObject(parent),
@@ -93,9 +93,9 @@ QButtonGroup *GnomeKeyringExtention::options()
 
     // 修复bug11577中问题：同时打开自动登录和免密登录，再关闭其中一个，此时鉴权窗口中勾选了恢复密钥环
     // 修复方案：自动登录和免密登录时，密钥环操作不作勾选
-    QDBusInterface *inter = new QDBusInterface("com.deepin.daemon.Accounts",
-                                               "/com/deepin/daemon/Accounts/User" + QString::number(getuid()),
-                                               "com.deepin.daemon.Accounts.User",
+    QDBusInterface *inter = new QDBusInterface("org.deepin.dde.Accounts1",
+                                               "/org/deepin/dde/Accounts1/User" + QString::number(getuid()),
+                                               "org.deepin.dde.Accounts1.User",
                                                QDBusConnection::systemBus());
     bool npLogin = inter->property("NoPasswdLogin").toBool();
     bool amLogin = inter->property("AutomaticLogin").toBool();
