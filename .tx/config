@@ -3,7 +3,7 @@ host = https://www.transifex.com
 minimum_perc = 80
 mode = developer
 
-[deepin-desktop-environment.dpa-ext-gnomekeyring]
+[o:linuxdeepin:p:deepin-desktop-environment:r:dpa-ext-gnomekeyring]
 file_filter = translations/dpa-ext-gnomekeyring_<lang>.ts
 source_file = translations/dpa-ext-gnomekeyring.ts
 source_lang = en
