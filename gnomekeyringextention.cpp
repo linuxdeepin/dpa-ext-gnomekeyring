@@ -18,9 +18,9 @@ static const QString ActionEnableAutoLogin = "org.deepin.dde.accounts.enable-aut
 static const QString ActionDisableAutoLogin = "org.deepin.dde.accounts.disable-auto-login";
 static const QString ActionEnableNopassLogin = "org.deepin.dde.accounts.enable-nopass-login";
 static const QString ActionDisableNopassLogin = "org.deepin.dde.accounts.disable-nopass-login";
-static const QString ActionEnrollFingerprint = "org.deepin.dde.authenticate.Fingerprint.enroll";
-static const QString ActionEnrollFace = "org.deepin.dde.authenticate.Face.enroll";
-static const QString ActionEnrollIris = "org.deepin.dde.authenticate.Iris.enroll";
+static const QString ActionEnrollFingerprint = "org.deepin.dde.authenticate.fingerprint.enroll";
+static const QString ActionEnrollFace = "org.deepin.dde.authenticate.face.enroll";
+static const QString ActionEnrollIris = "org.deepin.dde.authenticate.iris.enroll";
 
 GnomeKeyringExtention::GnomeKeyringExtention(QObject *parent)
     : QObject(parent),
