@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 // 与 Qt 中的宏冲突，必须在 Qt 前 include
@@ -51,7 +51,7 @@ void GnomeKeyringExtention::initialize(dpa::AgentExtensionProxy *proxy)
 void GnomeKeyringExtention::finalize()
 {
     qApp->removeTranslator(m_translator);
-    m_translator.data()->deleteLater();
+    m_translator->deleteLater();
 }
 
 QStringList GnomeKeyringExtention::interestedActions() const
@@ -86,9 +86,9 @@ QButtonGroup *GnomeKeyringExtention::options()
         actionID == ActionEnrollFingerprint ||
         actionID == ActionEnrollFace ||
         actionID == ActionEnrollIris) {
-        m_checkBtn.data()->setText(tr("Empty keyring password"));
+        m_checkBtn->setText(tr("Empty keyring password"));
     } else if (actionID == ActionDisableAutoLogin || actionID == ActionDisableNopassLogin) {
-        m_checkBtn.data()->setText(tr("Restore keyring password"));
+        m_checkBtn->setText(tr("Restore keyring password"));
     }
 
     // 修复bug11577中问题：同时打开自动登录和免密登录，再关闭其中一个，此时鉴权窗口中勾选了恢复密钥环
@@ -101,7 +101,7 @@ QButtonGroup *GnomeKeyringExtention::options()
     bool amLogin = inter->property("AutomaticLogin").toBool();
     inter->deleteLater();
 
-    m_checkBtn.data()->setChecked(!(npLogin && amLogin));
+    m_checkBtn->setChecked(!(npLogin && amLogin));
 
     QButtonGroup *group = new QButtonGroup;
     group->addButton(m_checkBtn);
@@ -120,11 +120,11 @@ void GnomeKeyringExtention::extendedDo()
         actionID == ActionEnrollFingerprint ||
         actionID == ActionEnrollFace ||
         actionID == ActionEnrollIris) {
-        if (!m_checkBtn.isNull() && m_checkBtn.data()->checkState() == Qt::Checked) {
+        if (!m_checkBtn.isNull() && m_checkBtn->checkState() == Qt::Checked) {
             emptyKeyringPassword(password);
         }
     } else if (actionID == ActionDisableAutoLogin || actionID == ActionDisableNopassLogin) {
-        if (!m_checkBtn.isNull() && m_checkBtn.data()->checkState() == Qt::Checked) {
+        if (!m_checkBtn.isNull() && m_checkBtn->checkState() == Qt::Checked) {
             restoreKeyringPassword(password);
         }
     }

@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2017 - 2023 UnionTech Software Technology Co., Ltd.
+// SPDX-FileCopyrightText: 2017-2026 UnionTech Software Technology Co., Ltd.
 //
 // SPDX-License-Identifier: GPL-3.0-or-later
 #ifndef GNOMEKEYRINGEXTENTION_H
@@ -18,17 +18,17 @@ class  GnomeKeyringExtention : public QObject, dpa::AgentExtension
     Q_INTERFACES(dpa::AgentExtension)
     Q_PLUGIN_METADATA(IID AgentExtensionPluginIID FILE "dpa-ext-gnomekeyring.json")
 public:
-    explicit GnomeKeyringExtention(QObject * parent = 0);
+    explicit GnomeKeyringExtention(QObject * parent = nullptr);
 
-    void initialize(dpa::AgentExtensionProxy *proxy) Q_DECL_OVERRIDE;
-    void finalize() Q_DECL_OVERRIDE;
+    void initialize(dpa::AgentExtensionProxy *proxy) override;
+    void finalize() override;
 
-    QStringList interestedActions() const Q_DECL_OVERRIDE;
-    QString description() const Q_DECL_OVERRIDE;
+    QStringList interestedActions() const override;
+    QString description() const override;
 
-    QButtonGroup* options() Q_DECL_OVERRIDE;
+    QButtonGroup* options() override;
 
-    void extendedDo() Q_DECL_OVERRIDE;
+    void extendedDo() override;
 
 private:
     dpa::AgentExtensionProxy *m_proxy;
