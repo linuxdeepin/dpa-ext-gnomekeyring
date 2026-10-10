@@ -8,9 +8,8 @@ Build-Depends:
  debhelper-compat (= 11),
  libglib2.0-dev,
  libsecret-1-dev,
- qt5-qmake,
- qtbase5-dev,
- qttools5-dev,
+ qt6-base-dev,
+ qt6-tools-dev,
 Standards-Version: 4.1.3
 Homepage: https://www.deepin.org
 

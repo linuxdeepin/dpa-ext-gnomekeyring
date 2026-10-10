@@ -8,9 +8,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-find_package(Qt5 COMPONENTS Widgets LinguistTools REQUIRED)
+find_package(Qt6 COMPONENTS Widgets DBus LinguistTools REQUIRED)
 find_package(PkgConfig REQUIRED)
-find_package(Qt5DBus REQUIRED)
 
 pkg_check_modules(libsecret REQUIRED IMPORTED_TARGET libsecret-unstable)
 add_compile_definitions(SECRET_API_SUBJECT_TO_CHANGE)
@@ -27,7 +26,7 @@ add_compile_definitions(QT_DEPRECATED_WARNINGS)
 
 file(GLOB TS_FILES translations/dpa-ext-gnomekeyring*.ts)
 
-qt5_add_translation(QM_FILES ${TS_FILES})
+qt6_add_translation(QM_FILES ${TS_FILES})
 
 add_library(dpa-ext-gnomekeyring MODULE)
 
@@ -37,16 +36,12 @@ target_sources(dpa-ext-gnomekeyring PRIVATE
     ${QM_FILES}
 )
 
-target_include_directories(dpa-ext-gnomekeyring PRIVATE
-    /usr/include
-    ${Qt5_INCLUDE_DIRS}
-)
 
 target_link_libraries(dpa-ext-gnomekeyring PRIVATE
-    Qt5::Widgets
+    Qt6::Widgets
     PkgConfig::libsecret
     PkgConfig::glib
-    ${Qt5DBus_LIBRARIES}
+    Qt6::DBus
 )
 
 install(TARGETS
